@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+gem "sinatra"
+gem "rspec"
+gem "rack-test"
+gem "sqlite3"
+gem "data_mapper"
+gem "dm-sqlite-adapter"
+gem "dm-serializer"
