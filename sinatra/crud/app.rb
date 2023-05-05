@@ -19,9 +19,18 @@ def get_all_bookmarks
   Bookmark.all(:order => :title)
 end
 
+def get_all_bookmarks_ordered_by_created_at
+  Bookmark.all(:order => :created_at)
+end
+
 get "/bookmarks" do
   content_type :json
   get_all_bookmarks.to_json
+end
+
+get "/bookmarks_by_created_at" do
+  content_type :json
+  get_all_bookmarks_ordered_by_created_at.to_json
 end
 
 get "/bookmarks/:id" do
@@ -32,7 +41,7 @@ get "/bookmarks/:id" do
 end
 
 post "/bookmarks" do
-  input = params.slice "url", "title"
+  input = params.slice "url", "title", "created_at"
   bookmark = Bookmark.create input
   # Created
   [201, "/bookmarks/#{bookmark['id']}"]
@@ -41,7 +50,7 @@ end
 put "/bookmarks/:id" do
   id = params[:id]
   bookmark = Bookmark.get(id)
-  input = params.slice "url", "title"
+  input = params.slice "url", "title", "created_at"
   bookmark.update input
   204 # No Content
 end

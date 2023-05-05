@@ -50,4 +50,20 @@ describe "application" do
     get "/bookmarks/#{id}"
     expect(last_response.body).to eq("null")
   end
+  
+  it "gets bookmarks in order of creation date" do
+    # Destroy all existing bookmarks.
+    Bookmark.destroy
+    
+    post "/bookmarks",
+      {:url => "http://www.test.com", :title => "Latest", :created_at => Time.new(2023, 1, 1)}
+    post "/bookmarks",
+      {:url => "http://www.test.com", :title => "Earliest", :created_at => Time.new(2020, 1, 1)}
+
+    
+    get "/bookmarks_by_created_at"
+    retrieved_bookmarks = JSON.parse(last_response.body)
+    expect(retrieved_bookmarks.map{|b| b["title"]}).to eq(["Earliest", "Latest"])
+    
+  end
 end
