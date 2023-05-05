@@ -45,3 +45,10 @@ put "/bookmarks/:id" do
   bookmark.update input
   204 # No Content
 end
+
+delete "/bookmarks/:id" do
+  id = params[:id]
+  bookmark = Bookmark.get(id)
+  bookmark.destroy
+  200 # OK
+end
