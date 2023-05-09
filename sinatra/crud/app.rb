@@ -52,6 +52,10 @@ get "/bookmarks/:id" do
   bookmark.to_json
 end
 
+get "/bookmark/new" do
+  erb :bookmark_form_new
+end
+
 post "/bookmarks" do
   input = params.slice "url", "title", "created_at"
   bookmark = Bookmark.create input
