@@ -3,6 +3,7 @@ require "sinatra"
 require "data_mapper"
 require "dm-serializer"
 require "json"
+require "sinatra/respond_with"
 require_relative "monkey_patches_post"
 require_relative "bookmark"
 
@@ -35,8 +36,8 @@ get "/" do
 end
 
 get "/bookmarks" do
-  content_type :json
-  get_all_bookmarks.to_json
+  @bookmarks = get_all_bookmarks
+  respond_with :bookmark_list, @bookmarks
 end
 
 get "/bookmarks_by_created_at" do

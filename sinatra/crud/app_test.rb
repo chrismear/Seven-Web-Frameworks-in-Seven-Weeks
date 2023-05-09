@@ -9,6 +9,8 @@ describe "application" do
   end
 
   it "creates a new bookmark" do
+    header "accept", "application/json"
+
     get "/bookmarks"
     bookmarks = JSON.parse(last_response.body)
     last_size = bookmarks.size
